@@ -16,12 +16,12 @@ def get_db():
     finally:
         db.close()
 
+class CheckboxCreate(BaseModel):
+    label: str
+
 @router.get("/checkboxes", response_model=list[CheckboxItemSchema])
 def get_checkboxes(db: Session = Depends(get_db)):
     return db.query(CheckboxItem).all()
-
-class CheckboxCreate(BaseModel):
-    label: str
 
 @router.post("/checkboxes", response_model=CheckboxItemSchema)
 def create_checkbox(item: CheckboxCreate, db: Session = Depends(get_db)):
